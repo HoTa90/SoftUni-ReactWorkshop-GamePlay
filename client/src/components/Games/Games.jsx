@@ -1,5 +1,6 @@
 export default function Games() {
-   return (
+  
+    return (
     <section id="catalog-page">
     <h1>All Games</h1>
     {/* <!-- Display div: with information about every game (if any) --> */}

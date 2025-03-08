@@ -1,5 +1,10 @@
+import { useState } from "react";
+
 export default function Home() {
-   return (
+   const [games, setGames] = useState([])
+   
+   
+    return (
     <section id="welcome-world">
 
     <div class="welcome-message">
@@ -12,7 +17,9 @@ export default function Home() {
       <h1>Latest Games</h1>
 
       {/* <!-- Display div: with information about every game (if any) --> */}
-      <div class="game">
+      {games.length > 0 ?
+    games.map(game => (
+        <div class="game" key={game._id}>
         <div class="image-wrap">
           <img src="./images/CoverFire.png" />
         </div>
@@ -24,33 +31,11 @@ export default function Home() {
           <a href="#" class="btn details-btn">Details</a>
         </div>
       </div>
-      <div class="game">
-        <div class="image-wrap">
-          <img src="./images/ZombieLang.png" />
-        </div>
-        <h3>Zombie Lang</h3>
-        <div class="rating">
-          <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-        </div>
-        <div class="data-buttons">
-          <a href="#" class="btn details-btn">Details</a>
-        </div>
-      </div>
-      <div class="game">
-        <div class="image-wrap">
-          <img src="./images/MineCraft.png" />
-        </div>
-        <h3>MineCraft</h3>
-        <div class="rating">
-          <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-        </div>
-        <div class="data-buttons">
-          <a href="#" class="btn details-btn">Details</a>
-        </div>
-      </div>
+    ))
+    :
+  <p class="no-articles">No games yet</p>
+    }
 
-      {/* <!-- Display paragraph: If there is no games  --> */}
-      <p class="no-articles">No games yet</p>
     </div>
   </section>
    );

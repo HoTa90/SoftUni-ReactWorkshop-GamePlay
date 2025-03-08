@@ -8,7 +8,7 @@ export default function Navigation() {
                 <Link class="home" to={'/'}>GamesPlay</Link>
             </h1>
             <nav>
-                <Link to={'/catalog'}>All games</Link>
+                <Link to={'/games'}>All games</Link>
                 {/* <!-- Logged-in users --> */}
                 <div id="user">
                     <Link to={'/create'}>Create Game</Link>
