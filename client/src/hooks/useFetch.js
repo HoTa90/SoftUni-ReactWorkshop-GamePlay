@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../components/Auth/AuthContext.jsx"; 
 
-const useFetch = (url, method = "GET", data = null) => {
+const useFetch = (url, method = "GET") => {
   const [responseData, setResponseData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
@@ -26,9 +26,9 @@ const useFetch = (url, method = "GET", data = null) => {
         options.headers["X-Authorization"] = userData.token;
       }
   
-      const fullUrl = `http://localhost:3030${url}`;
+      const baseUrl = 'http://localhost:3030';
 
-      const response = await fetch(fullUrl, options);
+      const response = await fetch(baseUrl + url, options);
   
       if (!response.ok) {
         const errorResponse = await response.json();

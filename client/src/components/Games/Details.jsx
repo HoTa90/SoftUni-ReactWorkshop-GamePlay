@@ -1,9 +1,12 @@
 import { useParams } from "react-router";
 import useFetch from "../../hooks/useFetch.js";
+import { useAuth } from "../Auth/AuthContext.jsx";
 
 export default function Details() {
     const { id } = useParams();
     const { data: game, isPending, error } = useFetch(`/data/games/${id}`);
+    const {userData} = useAuth();
+    console.log(userData)
   
     return (
     <section id="game-details">
@@ -38,10 +41,13 @@ export default function Details() {
       </div> */}
 
       {/* <!-- Edit/Delete buttons ( Only for creator of this game )  --> */}
-      <div className="buttons">
-        <a href="#" className="button">Edit</a>
-        <a href="#" className="button">Delete</a>
-      </div>
+      {userData?.id === game?._ownerId && (
+          <div className="buttons">
+            <a href="#" className="button">Edit</a>
+            <a href="#" className="button">Delete</a>
+          </div>
+        )}
+     
     </div>
 
     {/* <!-- Bonus --> */}

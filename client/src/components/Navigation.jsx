@@ -18,7 +18,7 @@ export default function Navigation() {
                 {userData &&
                     <div id="user">
                         <Link to={'/create'}>Create Game</Link>
-                        <Link to={'/logout'} onClick={logout}>Logout</Link>
+                        <Link to={'/'} onClick={logout}>Logout</Link>
                     </div>
                 }
 
