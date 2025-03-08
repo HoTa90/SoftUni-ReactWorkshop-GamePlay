@@ -5,7 +5,7 @@ export default function Navigation() {
         <header>
             {/* <!-- Navigation --> */}
             <h1>
-                <Link class="home" to={'/'}>GamesPlay</Link>
+                <Link className="home" to={'/'}>GamesPlay</Link>
             </h1>
             <nav>
                 <Link to={'/games'}>All games</Link>

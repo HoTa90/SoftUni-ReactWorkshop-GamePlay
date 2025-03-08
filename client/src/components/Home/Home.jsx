@@ -1,42 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useFetch from "../../hooks/useFetch.js";
+import GameCard from "./GameCard.jsx";
 
 export default function Home() {
-   const [games, setGames] = useState([])
-   
-   
+    const { data, isPending, error } = useFetch('http://localhost:3030/data/games?sortBy=_createdOn%20desc&distinct=category')
+
+
     return (
-    <section id="welcome-world">
+        <section id="welcome-world">
 
-    <div class="welcome-message">
-      <h2>ALL new games are</h2>
-      <h3>Only in GamesPlay</h3>
-    </div>
-    <img src="./images/four_slider_img01.png" alt="hero" />
+            <div className="welcome-message">
+                <h2>ALL new games are</h2>
+                <h3>Only in GamesPlay</h3>
+            </div>
+            <img src="./images/four_slider_img01.png" alt="hero" />
 
-    <div id="home-page">
-      <h1>Latest Games</h1>
+            <div id="home-page">
+                <h1>Latest Games</h1>
 
-      {/* <!-- Display div: with information about every game (if any) --> */}
-      {games.length > 0 ?
-    games.map(game => (
-        <div class="game" key={game._id}>
-        <div class="image-wrap">
-          <img src="./images/CoverFire.png" />
-        </div>
-        <h3>Cover Fire</h3>
-        <div class="rating">
-          <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-        </div>
-        <div class="data-buttons">
-          <a href="#" class="btn details-btn">Details</a>
-        </div>
-      </div>
-    ))
-    :
-  <p class="no-articles">No games yet</p>
-    }
+                {/* <!-- Display div: with information about every game (if any) --> */}
+                {data &&
+                    data.map(game => (
+                        < GameCard key={game._id} game={game} />
+                    ))}
 
-    </div>
-  </section>
-   );
+                {!data && <p className="no-articles">No games yet</p>}
+
+            </div>
+        </section>
+    );
 }
