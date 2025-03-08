@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export default function GameCard({game}) {
 
     console.log(game)
@@ -11,7 +13,7 @@ export default function GameCard({game}) {
       <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
     </div>
     <div className="data-buttons">
-      <a href="#" className="btn details-btn">Details</a>
+      <Link to={`/games/details/${game._id}`} className="btn details-btn">Details</Link>
     </div>
   </div>
    );

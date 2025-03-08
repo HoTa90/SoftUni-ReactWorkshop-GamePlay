@@ -1,72 +1,66 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import { useAuth } from "../components/Auth/AuthContext.jsx"; 
 
+const useFetch = (url, method = "GET", data = null) => {
+  const [responseData, setResponseData] = useState(null);
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState(null);
+  const { userData } = useAuth(); 
 
-const useFetch = (url, method = 'GET') => {
-    const [data, setData] = useState(null)
-    const [isPending, setIsPending] = useState(false)
-    const [error, setError] = useState(null);
-    const [options, setOptions] = useState(null);
+  const makeRequest = async (method, url, data = null) => {
+    setIsPending(true);
+    setError(null);
+  
+    try {
+      const options = {
+        method,
+        headers: {},
+      };
+  
+      if (data) {
+        options.headers["Content-Type"] = "application/json";
+        options.body = JSON.stringify(data);
+      }
+  
+      if (userData?.token) {
+        options.headers["X-Authorization"] = userData.token;
+      }
+  
+      const fullUrl = `http://localhost:3030${url}`;
 
-
-    const postData = (postData) => {
-        setOptions({
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(postData)
-        })
+      const response = await fetch(fullUrl, options);
+  
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.message || "Request failed");
+      }
+  
+  
+      const json = await response.json();
+      setResponseData(json);
+      return json; 
+    } catch (err) {
+      setError(err.message || "Could not fetch data");
+      console.error(err.message);
+      throw err; 
+    } finally {
+      setIsPending(false);
     }
+  };
 
+ 
+  useEffect(() => {
+    if (method === "GET" && url) {
+      makeRequest(method, url);
+    }
+  }, [url, method]); 
 
-    useEffect(() => {
-        const abortController = new AbortController();
+ 
+  const post = (url, data) => makeRequest("POST", url, data);
+  const put = (url, data) => makeRequest("PUT", url, data);
+  const del = (url) => makeRequest("DELETE", url);
 
-        const fetchData = async (fetchOptions) => {
-            setIsPending(true)
+  return { data: responseData, isPending, error, post, put, del };
+};
 
-            try {
-
-                const response = await fetch(url, { ...fetchOptions, signal: abortController.signal });
-
-                if (!response.ok) {
-                    throw new Error(response.statusText)
-                }
-
-                const json = await response.json();
-                setData(json);
-                setError(null);
-
-            } catch (err) {
-                if (err.name === 'AbortError') {
-                    console.log('The Fetch was aborted!')
-                } else {
-                    setError('Coud not Fetch Data');
-                    console.log(err.message);
-                }
-
-            } finally {
-                setIsPending(false)
-            }
-
-        }
-
-        if (method === 'GET') {
-            fetchData()
-        }
-
-        if (method === 'POST' && options) {
-            fetchData(options)
-        }
-
-        return () => {
-            abortController.abort();
-        }
-
-    }, [url, options, method])
-
-    return { data, isPending, error, postData }
-}
-
-
-export default useFetch
+export default useFetch;
