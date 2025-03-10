@@ -42,7 +42,6 @@ const useFetch = (url, method = "GET") => {
     } catch (err) {
       setError(err.message || "Could not fetch data");
       console.error(err.message);
-      throw err; 
     } finally {
       setIsPending(false);
     }

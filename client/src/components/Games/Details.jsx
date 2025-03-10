@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import useFetch from "../../hooks/useFetch.js";
 import { useAuth } from "../Auth/AuthContext.jsx";
 
@@ -43,8 +43,8 @@ export default function Details() {
       {/* <!-- Edit/Delete buttons ( Only for creator of this game )  --> */}
       {userData?.id === game?._ownerId && (
           <div className="buttons">
-            <a href="#" className="button">Edit</a>
-            <a href="#" className="button">Delete</a>
+            <Link to={`/games/edit/${game?._id}`} className="button">Edit</Link>
+            <Link href="#" className="button">Delete</Link>
           </div>
         )}
      
