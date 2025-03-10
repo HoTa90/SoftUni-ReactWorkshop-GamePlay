@@ -1,12 +1,25 @@
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import useFetch from "../../hooks/useFetch.js";
 import { useAuth } from "../Auth/AuthContext.jsx";
 
 export default function Details() {
     const { id } = useParams();
-    const { data: game, isPending, error } = useFetch(`/data/games/${id}`);
+    const { data: game, isPending, error, del } = useFetch(`/data/games/${id}`);
     const {userData} = useAuth();
-    console.log(userData)
+    const navigate = useNavigate()
+    
+
+    const deleteHandler = async (e) => {
+      
+      try {
+
+        await del(`/data/games/${id}`)
+        navigate('/games')
+        
+      } catch (err){
+        console.log(err.message)
+      }
+    }
   
     return (
     <section id="game-details">
@@ -44,7 +57,7 @@ export default function Details() {
       {userData?.id === game?._ownerId && (
           <div className="buttons">
             <Link to={`/games/edit/${game?._id}`} className="button">Edit</Link>
-            <Link href="#" className="button">Delete</Link>
+            <Link onClick={deleteHandler} className="button">Delete</Link>
           </div>
         )}
      

@@ -27,19 +27,19 @@ export default function Edit() {
 
           <h1>Edit Game</h1>
           <label htmlFor="leg-title">Legendary title:</label>
-          <input type="text" id="title" name="title" defaultValue={movie?.title} />
+          <input type="text" id="title" name="title" defaultValue={movie?.title} required />
 
           <label htmlFor="category">Category:</label>
-          <input type="text" id="category" name="category" defaultValue={movie?.category} />
+          <input type="text" id="category" name="category" defaultValue={movie?.category} required />
 
           <label htmlFor="levels">MaxLevel:</label>
-          <input type="number" id="maxLevel" name="maxLevel" min="1" defaultValue={movie?.maxLevel} />
+          <input type="number" id="maxLevel" name="maxLevel" min="1" defaultValue={movie?.maxLevel} required />
 
           <label htmlFor="game-img">Image:</label>
-          <input type="text" id="imageUrl" name="imageUrl" defaultValue={movie?.imageUrl} />
+          <input type="text" id="imageUrl" name="imageUrl" defaultValue={movie?.imageUrl} required />
 
           <label htmlFor="summary">Summary:</label>
-          <textarea name="summary" id="summary" defaultValue={movie?.summary}></textarea>
+          <textarea name="summary" id="summary" defaultValue={movie?.summary} required></textarea>
           <input className="btn submit" type="submit" defaultValue="Edit Game" />
 
         </div>
